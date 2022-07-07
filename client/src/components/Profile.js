@@ -35,7 +35,7 @@ const Profile = () => {
     }, []);
 
     const logout = async () => {
-        await axios.get('http://localhost:3001/user/logout').
+        await axios.get('https://sinduaapp.herokuapp.com/user/logout').
             then(function (response) {
                 // handle success
                 navigate("/");
@@ -46,7 +46,7 @@ const Profile = () => {
             })
     }
     const refreshToken = async () => {
-        await axios.get('http://localhost:3001/user/token').
+        await axios.get('https://sinduaapp.herokuapp.com/user/token').
             then(function (response) {
                 // handle success
                 const decoded = jwt_decode(response.data.accessToken);
@@ -72,7 +72,7 @@ const Profile = () => {
     const deletePost = async (post) => {
         
         //alert('Delete post:'+ post.post_content);
-        fetchData("DELETE", 'http://localhost:3001/post/DeletePost',{ postid: post._id }, token)
+        fetchData("DELETE", 'https://sinduaapp.herokuapp.com/post/DeletePost',{ postid: post._id }, token)
             .then((data) => {
                 console.log("resolved", data);
                 getUserPosts();
@@ -88,7 +88,7 @@ const Profile = () => {
         e.preventDefault();
         setSuccessAlert(false);
         setErrorAlert(false);
-        fetchData("DELETE", 'http://localhost:3001/user/delete',{ admin_id: adminId}, token)
+        fetchData("DELETE", 'https://sinduaapp.herokuapp.com/user/delete',{ admin_id: adminId}, token)
             .then((data) => {
                 console.log("resolved", data);
                 setSuccessAlert(data.success);
@@ -119,7 +119,7 @@ const Profile = () => {
         } 
 
         if(isValid){
-            fetchData("PUT", 'http://localhost:3001/user/updatepassword',{ admin_id: adminId, password}, token)
+            fetchData("PUT", 'https://sinduaapp.herokuapp.com/user/updatepassword',{ admin_id: adminId, password}, token)
             .then((data) => {
                 console.log("resolved", data);
                 setSuccessAlert(data.success);
@@ -153,7 +153,7 @@ const Profile = () => {
             setErrorAlert("Post can not be empty");
         }
         if(validPost){
-            fetchData("PUT", 'http://localhost:3001/post/UpdatePost',{
+            fetchData("PUT", 'https://sinduaapp.herokuapp.com/post/UpdatePost',{
                 postcontent: editpost,
                 postId: postid
             }, token)
@@ -187,7 +187,7 @@ const Profile = () => {
 
         if(validPost){
 
-            fetchData("POST", 'http://localhost:3001/post/CreatePost',{
+            fetchData("POST", 'https://sinduaapp.herokuapp.com/post/CreatePost',{
                 postcontent: post,
                 admin_id: adminId
             }, token)
@@ -211,7 +211,7 @@ const Profile = () => {
 
     const getUserPosts = async () =>{
 
-        fetchData("POST", 'http://localhost:3001/post/UserPosts',{
+        fetchData("POST", 'https://sinduaapp.herokuapp.com/post/UserPosts',{
             admin_id: adminId
         }, token)
             .then((data) => {
