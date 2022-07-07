@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true})); 
 app.use(bodyParser.json()); 
-app.use(cors({ credentials:true, origin:'https://sinduaapp.herokuapp.com/' }));
+app.use(cors({ credentials:true, origin:'https://sinduaapp.herokuapp.com' }));
 app.use(express.static(__dirname + "/public"));
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, '/public', 'index.html')));
 app.use(function(req, res, next) {
