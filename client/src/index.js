@@ -1,22 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-} from "react-router-dom";
-import Login from './components/Login'
-import Register from './components/Register'
+import App from './App';
+import axios from "axios";
+axios.defaults.withCredentials = true;
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <BrowserRouter>
-      <Routes>
-      <Route path="/" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-      </Routes>
-      </BrowserRouter>
-  
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
 );
 

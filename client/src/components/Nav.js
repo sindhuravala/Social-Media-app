@@ -1,5 +1,28 @@
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import axios from 'axios';
 const Navbar = () => {
+    const [isLogged, setIsLogged] = useState(false);
+      const navigate = useNavigate();
+      useEffect(() => {
+          refreshToken();
+      }, []);
+
+      const refreshToken = async () => {
+          await axios.get('http://localhost:3001/user/token').
+              then(function (response) {
+                  // handle success
+                  setIsLogged(true);
+              })
+              .catch(function (error) {
+                  // handle error
+                  console.log(error);
+                  if (error.response) {
+                      setIsLogged(false);
+                  }
+              })
+      }
+
     return (
       <div>
         <nav className="navbar navbar-expand-lg bg-light">
@@ -10,12 +33,23 @@ const Navbar = () => {
             </button>
             <div className="collapse navbar-collapse" id="navbarNav">
               <ul className="navbar-nav">
-                <li className="nav-item">
-                  <Link className="nav-link" to="/login">Login</Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/register">Registration</Link>
-                </li>
+                {!isLogged &&
+                  <>
+                    <li className="nav-item">
+                      <Link className="nav-link" to="/login">Login</Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link className="nav-link" to="/register">Registration</Link>
+                    </li>
+                  </>
+                }
+                {isLogged &&
+                  <>
+                    <li className="nav-item">
+                      <Link className="nav-link" to="/profile">Profile</Link>
+                    </li>
+                  </>
+                } 
               </ul>
             </div>
           </div>
@@ -24,4 +58,4 @@ const Navbar = () => {
     );
   }
   
-  export default Navbar;
+export default Navbar;
