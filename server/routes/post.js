@@ -4,6 +4,14 @@ const router = express.Router();
 
 // 2. create all routes to access database
 router
+  .post('/UserPosts', async (req, res) => {
+    try {
+      const posts = await Post.getUserPosts(req.body.admin_id);
+      res.send(posts);
+    } catch(error) {
+      res.status(401).send({ message: error.message });
+    }
+  })
   .post('/SeePost', async (req, res) => {
     try {
       const post = await Post.SeePost(req.body.postid);
@@ -15,23 +23,23 @@ router
 
   .post('/CreatePost', async (req, res) => {
     try {
-      const post = await Post.CreatePost(req.body.postId, req.body.postcontent, req.body.adminId);
-      res.send({...post, postid: undefined});
+      const post = await Post.CreatePost(req.body.postcontent, req.body.admin_id);
+      res.send({message: "Post Saved"});
     } catch(error) {
       res.status(401).send({ message: error.message }); 
     }
   })
 
-  .put('/updatePost', async (req, res) => {
+  .put('/UpdatePost', async (req, res) => {
     try {
       const post = await Post.updatePost(req.body.postId, req.body.postcontent);
-      res.send({...post, postid: undefined});
+      res.send({message: "Post Updated"});
     } catch(error) {
       res.status(401).send({ message: error.message });
     }
   })
 
-  .delete('/deletePost', async (req, res) => {
+  .delete('/DeletePost', async (req, res) => {
     try {
       await Post.deletePost(req.body.postid);
       res.send({ success: "Post deleted" });
